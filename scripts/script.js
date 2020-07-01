@@ -1,18 +1,18 @@
-
 var can = document.getElementById("can");
 var ctx = can.getContext("2d");
 
 var gui = new dat.GUI();
-var angle = 600, outer_angle = 600, angle2 = 600;
+var angle = 600, outer_angle = 600, angle2 = 600, angle3 = 400;
 var points = [];
 var settings = {
     "total particles": 1000,
     "total circles": 6,
-    "total circles 2": 4,
-    "outer radius": 100 ,
-    "inner radius": 100,
+    "total circles 2": 3,
+    "total circles 3": 2,
+    "outer radius": 80 ,
+    "inner radius": 95,
     "point 1 delay": -100,
-    "point 2 delay": -80,
+    "point 2 delay": -50,
 };
 var settings_copy = {};
 function resize() {
@@ -34,6 +34,7 @@ function y(offset, angle, r) {
 function setup() {
     points = [];
     points2 = [];
+    points3 = [];
     for (var i = 0; i < settings["total circles"]; ++i) {
         points.push({
             angle: Math.random() * Math.PI * 2
@@ -44,6 +45,11 @@ function setup() {
             angle2: Math.random() * Math.PI * 2
         });
     }
+     for (var i = 0; i < settings["total circles 3"]; ++i) {
+        points3.push({
+            angle3: Math.random() * Math.PI * 2
+        });
+    }
 }
 
 function draw() {
@@ -52,6 +58,7 @@ function draw() {
 
     var circles = settings["total circles"];
     var circles2 = settings["total circles 2"];
+    var circles3 = settings["total circles 3"];
     var center = {
         x: can.width / 2,
         y: can.height / 2
@@ -137,7 +144,7 @@ function draw() {
             settings_copy = Object.assign({}, settings);
         }
         
-        var ang2 = outer_angle + i * 10 * Math.PI / circles2;
+        var ang2 = outer_angle + i * 100 * Math.PI / circles2;
         var point2 = {
             x: x(center.x, ang2, settings["outer radius"]),
             y: y(center.y, ang2, settings["outer radius"]),
@@ -205,13 +212,88 @@ function draw() {
             ctx.fill();
         }
     }
+     for (var i = 0; i < circles3; ++i) {
+        if (JSON.stringify(settings_copy) != JSON.stringify(settings)) {
+            setup();
+            settings_copy = Object.assign({}, settings);
+        }
+        
+        var ang3 = outer_angle + i * 10 * Math.PI / circles3;
+        var point3 = {
+            x: x(center.x, ang3, settings["outer radius"]),
+            y: y(center.y, ang3, settings["outer radius"]),
+        };
+       
+        var inner_point_2 = {
+            x: x(point3.x, points3[i].angle3),
+            y: y(point3.y, points3[i].angle3)
+        }
+     
+        
+        ctx.beginPath();
+        ctx.fillStyle = 'white'//"#4F3BE5";
+        
+       
+        ctx.arc(inner_point_2.x, inner_point_2.y, 4, 0, Math.PI * 10);
+        // ctx.arc(inner_point1.x, inner_point1.y, 4, 5, Math.PI);
+
+     
+        ctx.closePath();
+        ctx.fill();
+      
+    
+        var total3 = settings["total particles"];
+
+
+        var ang_diff_3 = outer_angle + (i + 1) * 2 * Math.PI / circles3;
+        
+        var point_diff_3 = {
+            x: x(center.x, ang_diff_3, settings["outer radius"]),
+            y: y(center.y, ang_diff_3, settings["outer radius"]),
+        };
+
+
+        for (var j = 0; j < total3; ++j) {
+            ctx.beginPath();
+            var between = j / 3000 ;
+
+            var temp = {
+                x: lerp(
+                    x(point3.x, points3[i].angle3 - between * settings['point 1 delay']),
+                    x(point_diff_3.x, points3[(i + 1) % circles3].angle3 - (1 - between) * settings['point 2 delay']),
+                   between
+                ),
+                y: lerp(
+                    y(point3.y, points3[i].angle3 - between * settings['point 1 delay']),
+                    y(point_diff_3.y, points3[(i + 1) % circles3].angle3 - (1 - between) * settings['point 2 delay']),
+                    between
+                )
+                
+                
+            };
+           
+            
+                ctx.fillStyle= '#0B3F95 '
+                // ctx.fillStyle='rgba(255,255,255, 0.6)';
+            
+            
+            ctx.arc(temp.x, temp.y, 1, -3, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+
 
 
     for (var i = 0; i < circles; ++i) {
-        points[i].angle += Math.PI / 1000;
+        points[i].angle += Math.PI / 600;
     }
     for (var i = 0; i < circles2; ++i) {
-        points2[i].angle2 += Math.PI / 1000;
+        points2[i].angle2 += Math.PI / 200;
+    }
+    for (var i = 0; i < circles3; ++i) {
+        points3[i].angle3 += Math.PI / 100;
     }
     outer_angle += -Math.PI / 50;
     // console.log('ange', outer_angle);
@@ -222,3 +304,4 @@ window.onresize = resize;
 resize();
 // dgui();
 draw();
+
