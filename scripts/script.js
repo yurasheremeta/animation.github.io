@@ -9,9 +9,9 @@ var settings = {
     "total circles": 6,
     "total circles 2": 3,
     "total circles 3": 2,
-    "outer radius": 80 ,
-    "inner radius": 95,
-    "point 1 delay": -100,
+    "outer radius": -70 ,
+    "inner radius": -110,
+    "point 1 delay": -80,
     "point 2 delay": -50,
 };
 var settings_copy = {};
@@ -37,17 +37,17 @@ function setup() {
     points3 = [];
     for (var i = 0; i < settings["total circles"]; ++i) {
         points.push({
-            angle: Math.random() * Math.PI * 2
+            angle: Math.random() * 100 * 2
         });
     }
     for (var i = 0; i < settings["total circles 2"]; ++i) {
         points2.push({
-            angle2: Math.random() * Math.PI * 2
+            angle2: Math.random() * 100 * 2
         });
     }
      for (var i = 0; i < settings["total circles 3"]; ++i) {
         points3.push({
-            angle3: Math.random() * Math.PI * 2
+            angle3: Math.random() * 1000 * 2
         });
     }
 }
@@ -97,7 +97,7 @@ function draw() {
         var total = settings["total particles"];
 
 
-        var ang1 = outer_angle + (i + 1) * 2 * Math.PI / circles;
+        var ang1 = outer_angle + (i + 1) * 2 * Math.PI/ circles;
         // console.log(ang1);
         
         var point1 = {
@@ -112,13 +112,13 @@ function draw() {
 
             var temp = {
                 x: lerp(
-                    x(point.x, points[i].angle - between * settings['point 1 delay']),
-                    x(point1.x, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay']),
+                    x(point.x, points[i].angle - between * settings['point 1 delay'] ),
+                    x(point1.x, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay'] + 1000),
                    between
                 ),
                 y: lerp(
-                    y(point.y, points[i].angle - between * settings['point 1 delay']),
-                    y(point1.y, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay']),
+                    y(point.y, points[i].angle - between * settings['point 1 delay']  ),
+                    y(point1.y, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay'] + 1000),
                     between
                 )
                 
@@ -133,7 +133,7 @@ function draw() {
                 ctx.fillStyle = 'rgba(41,121,255,0.7)'
             }
             
-            ctx.arc(temp.x, temp.y, 0.8, -3, Math.PI * 2);
+            ctx.arc(temp.x, temp.y, 0.8, -3, 1000 * 2);
             ctx.closePath();
             ctx.fill();
         }
@@ -207,7 +207,7 @@ function draw() {
                 ctx.fillStyle = '#0B3F95 '
             }
             
-            ctx.arc(temp.x, temp.y, 0.8, -3, Math.PI * 2);
+            ctx.arc(temp.x, temp.y, 0.8, -3, 100 * 2);
             ctx.closePath();
             ctx.fill();
         }
@@ -234,7 +234,7 @@ function draw() {
         ctx.fillStyle = 'white'//"#4F3BE5";
         
        
-        ctx.arc(inner_point_2.x, inner_point_2.y, 4, 0, Math.PI * 10);
+        ctx.arc(inner_point_2.x, inner_point_2.y, 4, 0, 100 * 10);
         // ctx.arc(inner_point1.x, inner_point1.y, 4, 5, Math.PI);
 
      
@@ -277,7 +277,7 @@ function draw() {
                 // ctx.fillStyle='rgba(255,255,255, 0.6)';
             
             
-            ctx.arc(temp.x, temp.y, 1, -3, Math.PI * 2);
+            ctx.arc(temp.x, temp.y, 1, -3, 100 * 2);
             ctx.closePath();
             ctx.fill();
         }
@@ -287,15 +287,15 @@ function draw() {
 
 
     for (var i = 0; i < circles; ++i) {
-        points[i].angle += Math.PI / 600;
+        points[i].angle += Math.random() / 50   ;
     }
     for (var i = 0; i < circles2; ++i) {
-        points2[i].angle2 += Math.PI / 200;
+        points2[i].angle2 += Math.random() / 50;
     }
     for (var i = 0; i < circles3; ++i) {
-        points3[i].angle3 += Math.PI / 100;
+        points3[i].angle3 += Math.random()/ 50  ;
     }
-    outer_angle += -Math.PI / 50;
+    outer_angle += -Math.PI/ 50;
     // console.log('ange', outer_angle);
     
     requestAnimationFrame(draw);
