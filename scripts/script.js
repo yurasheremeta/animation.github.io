@@ -6,13 +6,13 @@ var angle = 600, outer_angle = 600, angle2 = 600, angle3 = 400;
 var points = [];
 var settings = {
     "total particles": 1000,
-    "total circles": 6,
+    "total circles": 3,
     "total circles 2": 3,
-    "total circles 3": 2,
-    "outer radius": -70 ,
-    "inner radius": -110,
+    "total circles 3": 6,
+    "outer radius": -100 ,
+    "inner radius": -100,
     "point 1 delay": -80,
-    "point 2 delay": -50,
+    "point 2 delay": -30,
 };
 var settings_copy = {};
 function resize() {
@@ -25,11 +25,11 @@ function lerp(a, b, t) {
 
 function x(offset, angle, r) {
     if (!r) r = settings["inner radius"];
-    return offset + Math.sin(angle) * r;
+    return offset + Math.sin(angle) * 100 ;
 }
 function y(offset, angle, r) {
     if (!r) r = settings["inner radius"];
-    return offset + Math.cos(angle) * r;
+    return offset + Math.cos(angle) * 100 ;
 }
 function setup() {
     points = [];
@@ -37,7 +37,7 @@ function setup() {
     points3 = [];
     for (var i = 0; i < settings["total circles"]; ++i) {
         points.push({
-            angle: Math.random() * 100 * 2
+            angle: Math.random() *  100 * 2
         });
     }
     for (var i = 0; i < settings["total circles 2"]; ++i) {
@@ -47,7 +47,7 @@ function setup() {
     }
      for (var i = 0; i < settings["total circles 3"]; ++i) {
         points3.push({
-            angle3: Math.random() * 1000 * 2
+            angle3: Math.random() * 10000
         });
     }
 }
@@ -86,7 +86,7 @@ function draw() {
         ctx.fillStyle = '#2979FF '//"#4F3BE5";
         
        
-        ctx.arc(inner_point.x, inner_point.y, 4, 0, Math.PI * 100);
+        ctx.arc(inner_point.x, inner_point.y, 4, 0, Math.PI * 1000);
         // ctx.arc(inner_point1.x, inner_point1.y, 4, 5, Math.PI);
 
      
@@ -112,13 +112,13 @@ function draw() {
 
             var temp = {
                 x: lerp(
-                    x(point.x, points[i].angle - between * settings['point 1 delay'] ),
-                    x(point1.x, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay'] + 1000),
+                    x(point.x, points[i] - between * settings['point 1 delay'] ),
+                    x(point1.x, points[(i + 1) % circles] - (1 - between) * settings['point 2 delay'] + 100),
                    between
                 ),
                 y: lerp(
-                    y(point.y, points[i].angle - between * settings['point 1 delay']  ),
-                    y(point1.y, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay'] + 1000),
+                    y(point.y, points[i] - between * settings['point 1 delay']  ),
+                    y(point1.y, points[(i + 1) % circles] - (1 - between) * settings['point 2 delay'] + 100),
                     between
                 )
                 
@@ -133,7 +133,7 @@ function draw() {
                 ctx.fillStyle = 'rgba(41,121,255,0.7)'
             }
             
-            ctx.arc(temp.x, temp.y, 0.8, -3, 1000 * 2);
+            ctx.arc(temp.x, temp.y, 0.8, 10  , 100000 * 2);
             ctx.closePath();
             ctx.fill();
         }
@@ -160,7 +160,7 @@ function draw() {
         ctx.fillStyle = '#0B3F95  '//"#4F3BE5";
         
        
-        ctx.arc(inner_point_1.x, inner_point_1.y, 4, 0, Math.PI * 100);
+        ctx.arc(inner_point_1.x, inner_point_1.y, 4, 0, Math.random() * 100);
         // ctx.arc(inner_point1.x, inner_point1.y, 4, 5, Math.PI);
 
      
@@ -186,13 +186,13 @@ function draw() {
 
             var temp = {
                 x: lerp(
-                    x(point2.x, points2[i].angle2 - between * settings['point 1 delay']),
-                    x(point_diff.x, points2[(i + 1) % circles2].angle2 - (1 - between) * settings['point 2 delay']),
+                    x(point2.x, points2[i] - between * settings['point 1 delay']),
+                    x(point_diff.x, points2[(i + 1) % circles2] - (1 - between) * settings['point 2 delay']),
                    between
                 ),
                 y: lerp(
-                    y(point2.y, points2[i].angle2 - between * settings['point 1 delay']),
-                    y(point_diff.y, points2[(i + 1) % circles2].angle2 - (1 - between) * settings['point 2 delay']),
+                    y(point2.y, points2[i] - between * settings['point 1 delay']),
+                    y(point_diff.y, points2[(i + 1) % circles2] - (1 - between) * settings['point 2 delay']),
                     between
                 )
                 
@@ -207,7 +207,7 @@ function draw() {
                 ctx.fillStyle = '#0B3F95 '
             }
             
-            ctx.arc(temp.x, temp.y, 0.8, -3, 100 * 2);
+            ctx.arc(temp.x, temp.y, 0.8, -3, Math.random() * 100);
             ctx.closePath();
             ctx.fill();
         }
@@ -218,23 +218,36 @@ function draw() {
             settings_copy = Object.assign({}, settings);
         }
         
-        var ang3 = outer_angle + i * 10 * Math.PI / circles3;
+        var ang3 = outer_angle + i * 10 *Math.PI / circles3;
         var point3 = {
-            x: x(center.x, ang3, settings["outer radius"]),
-            y: y(center.y, ang3, settings["outer radius"]),
+            x: x(center.x, ang3, Math.random()),
+            y: y(center.y, ang3, Math.random()),
         };
        
         var inner_point_2 = {
             x: x(point3.x, points3[i].angle3),
             y: y(point3.y, points3[i].angle3)
         }
+
+      
      
         
         ctx.beginPath();
         ctx.fillStyle = 'white'//"#4F3BE5";
         
        
-        ctx.arc(inner_point_2.x, inner_point_2.y, 4, 0, 100 * 10);
+        ctx.arc(inner_point_2.x, inner_point_2.y, 4, 0, Math.random() * 1000);
+        // ctx.arc(inner_point1.x, inner_point1.y, 4, 5, Math.PI);
+
+     
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = 'red'//"#4F3BE5";
+        
+       
+        // ctx.arc(inner_point_3.x, inner_point_2.y, 4, 0,Math.random() * 100);
         // ctx.arc(inner_point1.x, inner_point1.y, 4, 5, Math.PI);
 
      
@@ -255,7 +268,9 @@ function draw() {
 
         for (var j = 0; j < total3; ++j) {
             ctx.beginPath();
-            var between = j / 3000 ;
+            // console.log('j',j);
+            
+            var between = j / 2000 ;
 
             var temp = {
                 x: lerp(
@@ -271,13 +286,13 @@ function draw() {
                 
                 
             };
-           
+         
             
                 ctx.fillStyle= '#0B3F95 '
                 // ctx.fillStyle='rgba(255,255,255, 0.6)';
             
             
-            ctx.arc(temp.x, temp.y, 1, -3, 100 * 2);
+            ctx.arc(temp.x, temp.y, 1, -30, 100 * 100);
             ctx.closePath();
             ctx.fill();
         }
@@ -287,21 +302,20 @@ function draw() {
 
 
     for (var i = 0; i < circles; ++i) {
-        points[i].angle += Math.random() / 50   ;
+        points[i].angle += Math.random() / 100   ;
     }
     for (var i = 0; i < circles2; ++i) {
-        points2[i].angle2 += Math.random() / 50;
+        points2[i].angle2 += Math.random() / 10;
     }
     for (var i = 0; i < circles3; ++i) {
-        points3[i].angle3 += Math.random()/ 50  ;
+        points3[i].angle3 += Math.random()/ 100  ;
     }
-    outer_angle += -Math.PI/ 50;
+    outer_angle += -0.09;
     // console.log('ange', outer_angle);
     
     requestAnimationFrame(draw);
 }
 window.onresize = resize;
 resize();
-// dgui();
 draw();
 
