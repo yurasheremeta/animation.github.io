@@ -198,9 +198,12 @@ function draw() {
                 
                 
             };
-           
+
+            
+            ctx.globalAlpha = 0.6;
              if(ang1 > 601){
                 ctx.fillStyle= '#0B3F95 '
+                // ctx.fillOpacity= 0.3;
                 // ctx.fillStyle='rgba(255,255,255, 0.6)';
             } else {
                // ctx.fillStyle = '#1E1A9F';
@@ -286,9 +289,19 @@ function draw() {
                 
                 
             };
+
+            // console.log('temp', temp);
+            // if( temp.x < 290 && tempmp.y < 300) {
+                console.log('ctx', ctx);
+                
+                ctx.fillStyle= '#0B3F95'
+            // } else {
+            //     ctx.fillStyle= 'red'
+            // }
+            
          
             
-                ctx.fillStyle= '#0B3F95 '
+                
                 // ctx.fillStyle='rgba(255,255,255, 0.6)';
             
             
