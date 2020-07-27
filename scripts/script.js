@@ -124,7 +124,8 @@ function draw() {
                 
                 
             };
-           
+            ctx.globalAlpha = 0.6;
+
              if(ang1 > 601){
                 ctx.fillStyle= 'rgba(41,121,255,0.6)'
                 // ctx.fillStyle='rgba(255,255,255, 0.6)';
@@ -289,6 +290,7 @@ function draw() {
                 
                 
             };
+            ctx.globalAlpha = 0.7;
 
             // console.log('temp', temp);
             // if( temp.x < 290 && tempmp.y < 300) {
